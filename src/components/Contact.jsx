@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import useReleaseOnScroll from '../hooks/useReleaseOnScroll'
 import emailjs from '@emailjs/browser'
 
 const Contact = () => {
@@ -10,6 +11,10 @@ const Contact = () => {
     message: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const [headerRef, isHeaderVisible] = useReleaseOnScroll(0.3)
+  const [contactInfoRef, isContactInfoVisible] = useReleaseOnScroll(0.3)
+  const [formRef, isFormVisible] = useReleaseOnScroll(0.3)
 
   const handleChange = (e) => {
     setFormData({
@@ -92,7 +97,14 @@ const Contact = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div 
+          ref={headerRef}
+          className={`text-center mb-16 transition-all duration-1000 ease-out ${
+            isHeaderVisible 
+              ? 'opacity-100 transform translate-y-0' 
+              : 'opacity-0 transform translate-y-10'
+          }`}
+        >
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
               Get In Touch
@@ -106,7 +118,14 @@ const Contact = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
-          <div className="space-y-8">
+          <div 
+            ref={contactInfoRef}
+            className={`space-y-8 transition-all duration-1000 ease-out ${
+              isContactInfoVisible 
+                ? 'opacity-100 transform translate-x-0' 
+                : 'opacity-0 transform -translate-x-20'
+            }`}
+          >
             <div>
               <h3 className="text-2xl font-semibold text-white mb-6">
                 Let's Connect
@@ -124,6 +143,7 @@ const Contact = () => {
                   key={index}
                   href={info.link}
                   className="group flex items-center space-x-4 p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-purple-500/50 transition-all duration-300 transform hover:scale-105"
+                  style={{ animationDelay: `${index * 200}ms` }}
                 >
                   <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
                     {info.icon}
@@ -162,7 +182,14 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-8">
+          <div 
+            ref={formRef}
+            className={`bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-8 transition-all duration-1000 ease-out ${
+              isFormVisible 
+                ? 'opacity-100 transform translate-x-0' 
+                : 'opacity-0 transform translate-x-20'
+            }`}
+          >
             <h3 className="text-2xl font-semibold text-white mb-6">Send Message</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -226,23 +253,16 @@ const Contact = () => {
                   required
                   rows={6}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300 resize-none"
-                  placeholder="Tell me about your project..."
+                  placeholder="Tell me about your project or idea..."
                 />
               </div>
               
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                className="w-full px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               >
-                {isSubmitting ? (
-                  <div className="flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                    Sending...
-                  </div>
-                ) : (
-                  'Send Message'
-                )}
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>

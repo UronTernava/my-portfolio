@@ -1,8 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
+import useReleaseOnScroll from '../hooks/useReleaseOnScroll'
 
 const Footer = () => {
   const [openFaq, setOpenFaq] = useState(null)
+
+  const [mainContentRef, isMainContentVisible] = useReleaseOnScroll(0.3)
+  const [bottomBarRef, isBottomBarVisible] = useReleaseOnScroll(0.3)
 
   const faqs = [
     {
@@ -35,7 +39,14 @@ const Footer = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Main Footer Content */}
-        <div className="py-16">
+        <div 
+          ref={mainContentRef}
+          className={`py-16 transition-all duration-1000 ease-out ${
+            isMainContentVisible 
+              ? 'opacity-100 transform translate-y-0' 
+              : 'opacity-0 transform translate-y-20'
+          }`}
+        >
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Brand Section */}
             <div className="space-y-6">
@@ -128,7 +139,14 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="py-6 border-t border-white/10">
+        <div 
+          ref={bottomBarRef}
+          className={`py-6 border-t border-white/10 transition-all duration-1000 ease-out ${
+            isBottomBarVisible 
+              ? 'opacity-100 transform translate-y-0' 
+              : 'opacity-0 transform translate-y-10'
+          }`}
+        >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-400 text-sm">
               © {currentYear} URON. All rights reserved.

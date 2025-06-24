@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import './App.css'
+import LoadingScreen from './components/LoadingScreen'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Projects from './components/Projects'
@@ -8,7 +9,29 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true)
+
   useEffect(() => {
+    // Smooth scrolling for anchor links
+    const handleSmoothScroll = (e) => {
+      if (e.target.hash) {
+        e.preventDefault()
+        const target = document.querySelector(e.target.hash)
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          })
+        }
+      }
+    }
+
+    // Add smooth scroll to all anchor links
+    const anchorLinks = document.querySelectorAll('a[href^="#"]')
+    anchorLinks.forEach(link => {
+      link.addEventListener('click', handleSmoothScroll)
+    })
+
     // Reveal on scroll functionality
     const revealOnScroll = () => {
       const reveals = document.querySelectorAll('.reveal-on-scroll, .reveal-on-scroll-left, .reveal-on-scroll-right')
@@ -31,8 +54,19 @@ function App() {
 
     return () => {
       window.removeEventListener('scroll', revealOnScroll)
+      anchorLinks.forEach(link => {
+        link.removeEventListener('click', handleSmoothScroll)
+      })
     }
   }, [])
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false)
+  }
+
+  if (isLoading) {
+    return <LoadingScreen onLoadingComplete={handleLoadingComplete} />
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">

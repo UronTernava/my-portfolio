@@ -313,3 +313,344 @@ body {
     transform: translateY(0) scale(1);
   }
 }
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  /* iPhone SE, small phones */
+  .text-5xl {
+    font-size: 2.5rem;
+  }
+  
+  .text-7xl {
+    font-size: 3rem;
+  }
+  
+  .w-80 {
+    width: 18rem;
+  }
+  
+  .h-80 {
+    height: 18rem;
+  }
+  
+  .w-72 {
+    width: 16rem;
+  }
+  
+  .h-72 {
+    height: 16rem;
+  }
+}
+
+@media (max-width: 375px) {
+  /* iPhone 13, iPhone 12, iPhone 11 */
+  .text-5xl {
+    font-size: 2.25rem;
+  }
+  
+  .text-7xl {
+    font-size: 2.75rem;
+  }
+  
+  .w-80 {
+    width: 16rem;
+  }
+  
+  .h-80 {
+    height: 16rem;
+  }
+  
+  .w-72 {
+    width: 14rem;
+  }
+  
+  .h-72 {
+    height: 14rem;
+  }
+  
+  .px-8 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  .py-3 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+}
+
+@media (max-width: 320px) {
+  /* iPhone 5/SE */
+  .text-5xl {
+    font-size: 2rem;
+  }
+  
+  .text-7xl {
+    font-size: 2.5rem;
+  }
+  
+  .w-80 {
+    width: 14rem;
+  }
+  
+  .h-80 {
+    height: 14rem;
+  }
+  
+  .w-72 {
+    width: 12rem;
+  }
+  
+  .h-72 {
+    height: 12rem;
+  }
+}
+
+/* Tablet Responsive */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .text-5xl {
+    font-size: 3rem;
+  }
+  
+  .text-7xl {
+    font-size: 4rem;
+  }
+  
+  .w-80 {
+    width: 20rem;
+  }
+  
+  .h-80 {
+    height: 20rem;
+  }
+  
+  .w-72 {
+    width: 18rem;
+  }
+  
+  .h-72 {
+    height: 18rem;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .min-h-screen {
+    min-height: auto;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .text-5xl {
+    font-size: 2rem;
+  }
+  
+  .text-7xl {
+    font-size: 2.5rem;
+  }
+  
+  .w-80 {
+    width: 12rem;
+  }
+  
+  .h-80 {
+    height: 12rem;
+  }
+  
+  .w-72 {
+    width: 10rem;
+  }
+  
+  .h-72 {
+    height: 10rem;
+  }
+}
+
+/* Loading Screen Responsive */
+@media (max-width: 640px) {
+  .loading-screen h1 {
+    font-size: 2rem;
+  }
+  
+  .loading-screen .w-64 {
+    width: 16rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .loading-screen h1 {
+    font-size: 1.75rem;
+  }
+  
+  .loading-screen .w-64 {
+    width: 14rem;
+  }
+}
+
+/* Navbar Responsive */
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 1.5rem;
+  }
+  
+  .navbar-nav {
+    padding: 1rem 0;
+  }
+  
+  .navbar-nav .nav-link {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+/* Project Cards Responsive */
+@media (max-width: 640px) {
+  .project-card {
+    margin-bottom: 1.5rem;
+  }
+  
+  .project-card .h-48 {
+    height: 12rem;
+  }
+  
+  .project-card .p-6 {
+    padding: 1rem;
+  }
+  
+  .project-card h3 {
+    font-size: 1.125rem;
+  }
+  
+  .project-card p {
+    font-size: 0.875rem;
+  }
+}
+
+/* Contact Form Responsive */
+@media (max-width: 640px) {
+  .contact-form {
+    padding: 1.5rem;
+  }
+  
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Footer Responsive */
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .footer-section {
+    text-align: center;
+  }
+}
+
+/* Smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #8b5cf6, #ec4899);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #7c3aed, #db2777);
+}
+
+/* Loading animation improvements */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Touch-friendly buttons for mobile */
+@media (max-width: 768px) {
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .social-link {
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .nav-link {
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* Prevent text selection on interactive elements */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Improved focus states for accessibility */
+button:focus,
+a:focus,
+input:focus,
+textarea:focus {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .bg-gradient-to-r {
+    background: #000 !important;
+  }
+  
+  .text-gray-300 {
+    color: #fff !important;
+  }
+  
+  .border-white\/10 {
+    border-color: #fff !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .animate-pulse,
+  .animate-bounce,
+  .animate-float {
+    animation: none !important;
+  }
+}

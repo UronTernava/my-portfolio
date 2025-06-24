@@ -4,53 +4,67 @@ import { useState, useEffect } from 'react'
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [scrollOffset, setScrollOffset] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+      const currentScrollY = window.scrollY
+      setIsScrolled(currentScrollY > 20)
+      setScrollOffset(currentScrollY)
     }
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+    setIsOpen(false)
+  }
+
   const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' },
-    { name: 'Footer', href: '#footer' }
+    { name: 'Home', href: 'home' },
+    { name: 'Projects', href: 'projects' },
+    { name: 'Contact', href: 'contact' },
+    { name: 'Footer', href: 'footer' }
   ]
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-out ${
       isScrolled 
-        ? 'bg-black/80 backdrop-blur-md border-b border-white/10' 
+        ? 'bg-black/90 backdrop-blur-md border-b border-white/10 shadow-lg' 
         : 'bg-transparent'
-    }`}>
+    }`} style={{ transform: `translateY(${scrollOffset}px)` }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 lg:h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a 
-              href="#home" 
-              className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent hover:from-purple-200 hover:to-pink-200 transition-all duration-300"
+            <button 
+              onClick={() => scrollToSection('home')}
+              className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent hover:from-purple-200 hover:to-pink-200 transition-all duration-300 cursor-pointer"
             >
               URON
-            </a>
+            </button>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
               {navItems.map((item) => (
-                <a
+                <button
                   key={item.name}
-                  href={item.href}
-                  className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-all duration-300 relative group"
+                  onClick={() => scrollToSection(item.href)}
+                  className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-all duration-300 relative group cursor-pointer"
                 >
                   {item.name}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300 group-hover:w-full"></span>
-                </a>
+                </button>
               ))}
             </div>
           </div>
@@ -90,21 +104,20 @@ const Navbar = () => {
         } overflow-hidden`}>
           <div className="px-2 pt-2 pb-3 space-y-1 bg-black/50 backdrop-blur-sm rounded-lg mt-2 border border-white/10">
             {navItems.map((item) => (
-              <a
+              <button
                 key={item.name}
-                href={item.href}
-                className="text-gray-300 hover:text-white block px-3 py-2 text-base font-medium transition-colors duration-200"
-                onClick={() => setIsOpen(false)}
+                onClick={() => scrollToSection(item.href)}
+                className="text-gray-300 hover:text-white block px-3 py-2 text-base font-medium transition-colors duration-200 w-full text-left"
               >
                 {item.name}
-              </a>
+              </button>
             ))}
             <div className="pt-4">
               <a 
                 href="https://www.linkedin.com/in/uron-ternava-806350304/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="w-full px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full hover:from-purple-600 hover:to-pink-600 transition-all duration-300"
+                className="w-full px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full hover:from-purple-600 hover:to-pink-600 transition-all duration-300 block text-center"
               >
                 Get In Touch
               </a>

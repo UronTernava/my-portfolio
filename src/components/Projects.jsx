@@ -1,36 +1,42 @@
 import React from 'react'
+import useReleaseOnScroll from '../hooks/useReleaseOnScroll'
 
 const Projects = () => {
+  const [headerRef, isHeaderVisible] = useReleaseOnScroll(0.3)
+  const [projectsRef, isProjectsVisible] = useReleaseOnScroll(0.2)
+  const [skillsRef, isSkillsVisible] = useReleaseOnScroll(0.3)
+  const [ctaRef, isCtaVisible] = useReleaseOnScroll(0.3)
+
   const projects = [
     {
       id: 1,
-      title: "E-Commerce Platform",
-      description: "A full-stack e-commerce solution with React, Node.js, and MongoDB. Features include user authentication, payment processing, and admin dashboard.",
+      title: "WasteLess",
+      description: "A modern food waste tracking and pantry management app with receipt scanning, expiry alerts, and beautiful glassmorphism UI. Features smart food tracking, OCR technology, and user authentication.",
       image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop",
       category: "web",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+      technologies: ["React", "Node.js", "SQLite", "Tesseract.js", "JWT"],
       liveUrl: "#",
-      githubUrl: "#"
+      githubUrl: "https://github.com/UronTernava/WasteLess.git"
     },
     {
       id: 2,
-      title: "Task Management App",
-      description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
+      title: "MindTrack",
+      description: "A professional mental health tracker and journaling app with mood tracking, sentiment analysis, daily quotes, and 3D animated UI. Features user authentication and personalized insights.",
       image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&h=300&fit=crop",
       category: "web",
-      technologies: ["React", "Firebase", "Tailwind CSS", "Framer Motion"],
+      technologies: ["React", "Tailwind CSS", "react-three-fiber", "React Router"],
       liveUrl: "#",
-      githubUrl: "#"
+      githubUrl: "https://github.com/UronTernava/mental-health-tracker.git"
     },
     {
       id: 3,
-      title: "Weather Dashboard",
-      description: "A beautiful weather application with location-based forecasts, interactive maps, and detailed weather analytics.",
+      title: "AI E-commerce Shop",
+      description: "An AI-powered e-commerce platform with modern features and intelligent product recommendations. Built with cutting-edge technologies for optimal user experience.",
       image: "https://images.unsplash.com/photo-1592210454359-9043f067919b?w=500&h=300&fit=crop",
       category: "web",
-      technologies: ["React", "OpenWeather API", "Chart.js", "Geolocation"],
+      technologies: ["React", "AI/ML", "Node.js", "Database", "API"],
       liveUrl: "#",
-      githubUrl: "#"
+      githubUrl: "https://github.com/UronTernava/AI-Ecommerce-Shop.git"
     }
   ]
 
@@ -44,7 +50,14 @@ const Projects = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div 
+          ref={headerRef}
+          className={`text-center mb-16 transition-all duration-1000 ease-out ${
+            isHeaderVisible 
+              ? 'opacity-100 transform translate-y-0' 
+              : 'opacity-0 transform translate-y-10'
+          }`}
+        >
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
               My Projects
@@ -57,34 +70,34 @@ const Projects = () => {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
+        <div 
+          ref={projectsRef}
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-1000 ease-out ${
+            isProjectsVisible 
+              ? 'opacity-100 transform translate-y-0' 
+              : 'opacity-0 transform translate-y-20'
+          }`}
+        >
+          {projects.map((project, index) => (
             <div
               key={project.id}
               className="group relative bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/50 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25 animate-glow"
+              style={{ animationDelay: `${index * 200}ms` }}
             >
               {/* Project Image */}
               <div className="relative h-48 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center">
                   <div className="text-center text-white/50">
-                    <svg className="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    <svg className="w-16 h-16 mx-auto mb-2" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
                     </svg>
-                    <p className="text-sm">Project Image</p>
+                    <p className="text-sm">GitHub Repository</p>
                   </div>
                 </div>
                 
                 {/* Overlay on hover */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <div className="flex space-x-4">
-                    <a
-                      href={project.liveUrl}
-                      className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors duration-200 transform hover:scale-110"
-                    >
-                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
                     <a
                       href={project.githubUrl}
                       className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors duration-200 transform hover:scale-110"
@@ -129,8 +142,27 @@ const Projects = () => {
           ))}
         </div>
 
+        {/* View GitHub Button - Centered */}
+        <div className="text-center mt-12">
+          <a 
+            href="https://github.com/UronTernava" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="px-8 py-3 border-2 border-purple-500 text-purple-400 font-semibold rounded-full hover:bg-purple-500 hover:text-white transition-all duration-300 transform hover:scale-105"
+          >
+            View GitHub
+          </a>
+        </div>
+
         {/* Skills Section */}
-        <div className="mt-20">
+        <div 
+          ref={skillsRef}
+          className={`mt-20 transition-all duration-1000 ease-out ${
+            isSkillsVisible 
+              ? 'opacity-100 transform translate-y-0' 
+              : 'opacity-0 transform translate-y-20'
+          }`}
+        >
           <div className="text-center mb-12">
             <h3 className="text-3xl lg:text-4xl font-bold mb-4">
               <span className="bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
@@ -156,6 +188,7 @@ const Projects = () => {
               <div
                 key={index}
                 className="group relative bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-purple-500/50 transition-all duration-500 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 p-6 text-center"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="text-4xl mb-3">{skill.icon}</div>
                 <h4 className="text-white font-semibold text-sm group-hover:text-purple-400 transition-colors duration-300">
@@ -168,7 +201,14 @@ const Projects = () => {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-16">
+        <div 
+          ref={ctaRef}
+          className={`text-center mt-16 transition-all duration-1000 ease-out ${
+            isCtaVisible 
+              ? 'opacity-100 transform translate-y-0' 
+              : 'opacity-0 transform translate-y-10'
+          }`}
+        >
           <p className="text-gray-300 mb-6">
             Interested in working together? Let's discuss your next project!
           </p>
@@ -180,14 +220,6 @@ const Projects = () => {
               className="px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
             >
               Get In Touch
-            </a>
-            <a 
-              href="https://github.com/UronTernava" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="px-8 py-3 border-2 border-purple-500 text-purple-400 font-semibold rounded-full hover:bg-purple-500 hover:text-white transition-all duration-300 transform hover:scale-105"
-            >
-              View GitHub
             </a>
           </div>
         </div>
